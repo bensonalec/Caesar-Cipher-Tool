@@ -1,3 +1,7 @@
+//find memory leak
+//want to make compare return the found word
+//then implement more ciphers
+//sodoku solver
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,10 +29,23 @@ int main()
         for(;i < 26; i++) {
                 temp = caesarian_decrypt(i, string, len);
                 compare(temp,len);
-
+                if(foundflag == 1){
+                        break;
+                }
         }
+        /*
+        if(foundflag == 1){
+                printf("Original: %s\n",string);
+                printf("Decoded: %s\n",str);
+        }
+        */
+        /*
+        else {
+                printf("This mesage was not found in the dictionary\n");
+        }
+        */
 
-
+        free(temp);
         return 0;
 }
 
@@ -111,7 +128,8 @@ int compare(char *temp,int len)
         while(fgets(buf,1024, dictionary)) {
                 found = strtok(buf, "\n");
                 if(strncmp(temp, found,len) == 0) {
-                        printf("Found: %s\n", buf);
+
+                        printf("%s\n",buf);
                         foundflag = 1;
                         }
 
