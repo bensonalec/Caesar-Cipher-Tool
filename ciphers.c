@@ -10,7 +10,9 @@ int compare(char *temp,int len);
 
 int main()
 {
-        char *string = "tlffu";
+        char buf[1024];
+        char *string = fgets(buf,1024,stdin);
+
         int len;
         int i;
         i = 0;
