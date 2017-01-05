@@ -24,28 +24,18 @@ int main()
         int foundflag;
         foundflag = 0;
         len = strlen(string);
-
-        //caesarian_encrypt(1, string, len);
         for(;i < 26; i++) {
                 temp = caesarian_decrypt(i, string, len);
-                compare(temp,len);
+                foundflag = compare(temp,len);
                 if(foundflag == 1){
+                        free(temp);
                         break;
                 }
-        }
-        /*
-        if(foundflag == 1){
-                printf("Original: %s\n",string);
-                printf("Decoded: %s\n",str);
-        }
-        */
-        /*
-        else {
-                printf("This mesage was not found in the dictionary\n");
-        }
-        */
+                free(temp);
 
-        free(temp);
+        }
+
+
         return 0;
 }
 
@@ -90,6 +80,7 @@ char *caesarian_decrypt(int n, char *str, int len)
         char *newstr;
         int i;
         int x;
+        //char *temp;
         x = 0;
         i = 0;
         //while loop
@@ -103,7 +94,8 @@ char *caesarian_decrypt(int n, char *str, int len)
 
         }
         i = 0;
-        newstr = malloc(len);
+        newstr = malloc(len * sizeof(char));
+
         for(;i<len;i++){
                 x=0;
                 for(;x<26;x++) {
@@ -113,6 +105,7 @@ char *caesarian_decrypt(int n, char *str, int len)
                         }
                 }
         }
+
         return newstr;
 }
 
@@ -127,7 +120,7 @@ int compare(char *temp,int len)
         char buf[1024];
         while(fgets(buf,1024, dictionary)) {
                 found = strtok(buf, "\n");
-                if(strncmp(temp, found,len) == 0) {
+                if(strncmp(temp, found,len-1) == 0) {
 
                         printf("%s\n",buf);
                         foundflag = 1;
